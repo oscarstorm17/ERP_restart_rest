@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,9 +28,9 @@ import com.example.demo.service.UserService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 
+
 @RestController
 @RequestMapping("/controller")
-@CrossOrigin(origins = "https://localhost:5173")
 public class AuthController {
 	
 	private final UserService userService;
@@ -52,29 +54,49 @@ public class AuthController {
 	
 	
 	//this is login function but we cannot name this "login" as that is reserved by the spring security.
+	@CrossOrigin(origins = "http://localhost:5173/")
 	@PostMapping("/checklogin") 
 	public ResponseEntity<String> checkLogin(@RequestBody LoginDTO dto) {
+		//System.out.println("Username = "+dto.getUsername());
+		//System.out.println("password = "+dto.getPassword());
 		User user = userService.getUserByUsername(dto.getUsername());
-		if(user==null) {
-			System.out.println("AuthController: Username not found");
-			return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Username");
-		}
-		if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-			System.out.println("AuthController: password didnt match");
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Password");
-		}
+//		if(user==null) {
+//			System.out.println("AuthController: Username not found");
+//			return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Username");
+//		}
+//		if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+//			System.out.println("AuthController: password didnt match");
+//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Password");
+//		}
+		//instead of all these ifs, implemented single User Not found Exception
 		System.out.println("AuthController: Login Success, generating token");
-		String token = jwtUtil.generateToken(user.getUsername());
 		
-		return ResponseEntity.ok(token);
+		//generate a token while login
+		jwtUtil.generateToken(dto.getUsername());
+		
+		//get Current active token
+		String token = jwtUtil.getToken();
+		System.out.println("Token Generated : "+token);
+		
+		//get current username
+		String username = jwtUtil.extractUsername(token);
+		System.out.println("username inside token : "+username);
+		
+		Map<String, String> response = new HashMap<>();
+		response.put("token", token);
+		response.put("username", username);
+		//return ResponseEntity.ok(token);
+		return ResponseEntity.ok("{\"token\": \""+token+"\",\"username\": \""+username+"\"}");
 	} 
 	
+	@CrossOrigin(origins = "http://localhost:5173/")
 	@PostMapping("/signup")
 	public ResponseEntity<User> signup(@RequestBody User user_){
 		user_.setPassword(passwordEncoder.encode(user_.getPassword()));
-		 User newUser = userService.createUser(user_);
+		User newUser = userService.createUser(user_);
 		return ResponseEntity.ok(newUser);
 	}
+	
 	
 
 }

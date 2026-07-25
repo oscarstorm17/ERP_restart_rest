@@ -39,6 +39,10 @@ public class SecurityConfig {
 			.csrf(csrf-> csrf.disable())
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/controller/**").permitAll()
+					.requestMatchers("/group/**").permitAll()
+					.requestMatchers("/friend/**").permitAll()
+					.requestMatchers("/expense/**").permitAll()
+					.requestMatchers("/e/**").permitAll()
 					
 					.anyRequest().authenticated())
 			
