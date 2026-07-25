@@ -24,18 +24,18 @@ public class ExpenseSplit {
 	private Long splitID;
 	
 	@ManyToOne
-    @JoinColumn(name = "expenseID", nullable = false)
-    private Expense expense;
+    @JoinColumn(name = "expenseid", nullable = false)
+    private Expense expense; // object
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
-    private User user;
+    @JoinColumn(name = "username", nullable = false)
+    private User user; // person/ user
 	
 	@Column(name="splitvalue", nullable = false)
 	private float splitValue;  //  percent or share
 	
 	@Column(name="amount", nullable = false)
-	private float amount; //amount owed
+	private float splitAmount; //amount owed
 
 	
 	
@@ -75,11 +75,11 @@ public class ExpenseSplit {
 	}
 
 	public float getAmount() {
-		return amount;
+		return splitAmount;
 	}
 
 	public void setAmount(float amount) {
-		this.amount = amount;
+		this.splitAmount = amount;
 	}
 	
 	

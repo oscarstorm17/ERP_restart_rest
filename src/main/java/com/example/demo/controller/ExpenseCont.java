@@ -30,6 +30,7 @@ public class ExpenseCont {
 		}
 	//@CrossOrigin(origins = "http://localhost:5173/")
 	@PostMapping("/addExpense") 
+	//expects 
 	public ResponseEntity<Expense> saveExpense(@RequestBody Expense expense_){
 		expenseService.addExpense(expense_);
 		return ResponseEntity.ok(expense_);

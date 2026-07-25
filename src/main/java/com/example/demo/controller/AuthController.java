@@ -97,6 +97,13 @@ public class AuthController {
 		return ResponseEntity.ok(newUser);
 	}
 	
+	@CrossOrigin(origins = "http://localhost:5173/")
+	@PostMapping("/getUser")
+	public ResponseEntity<User> getUserByUsername(@RequestParam String username_){
+		User user = userService.getUserByUsername(username_);
+		return ResponseEntity.ok(user);
+	}
+	
 	
 
 }

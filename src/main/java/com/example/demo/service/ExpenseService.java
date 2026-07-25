@@ -37,13 +37,12 @@ public class ExpenseService {
 			throw new IllegalFieldException();
 		}
 		Long id_ = expense_.getGroup().getGroupID();
+		//need to add security checkes for groupID, paidByUsername, splitBY
 		Group group_ = groupsService.getGroupById(id_);
-		//group exists....
-		User user_ = userService.getUserByUsername(expense_.getPaidByUserName());
+		//User user_ = userService.getUserByUsername(expense_.getPaidByUserName());
 		//paid by user exists.
 		//expense_.setSplitBy(expense_.getSplitBy().toString().toUpperCase());
 		expenseRepository.save(expense_);
-		
 		return  expense_; 
 	}
 	
