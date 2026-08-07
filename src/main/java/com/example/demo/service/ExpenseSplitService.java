@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import com.example.demo.exceptions.ExpenseSplitNotFoundException;
 import com.example.demo.exceptions.IllegalFieldException;
 import com.example.demo.model.Expense;
 import com.example.demo.model.ExpenseSplit;
+import com.example.demo.model.SplitDataDTO;
 import com.example.demo.model.User;
 import com.example.demo.repository.ExpenseSplitRepository;
 
@@ -54,52 +56,59 @@ public class ExpenseSplitService {
 		}
 		return list;
 	}
-	public ExpenseSplit saveExpenseSplitByPercent(Expense expense_, User user_, float percent_){
-		//item_ contains expenseID, userID, splitValue
-		//finalAmount to be calculated here
+	public void saveExpenseSplitByPercent(Expense expense_, ArrayList<SplitDataDTO> splitsList){
 		
-		ExpenseSplit expenseSplit = new ExpenseSplit();
-		expenseSplit.setUser(user_);
-		expenseSplit.setExpense(expense_);
-		expenseSplit.setSplitValue(percent_);
-		float amount = expense_.getAmount() * percent_ / 100;
-        expenseSplit.setAmount(amount);
-		try {
-			return expenseSplitRepository.save(expenseSplit);
-		}
-		catch (Exception e) {
-			throw new IllegalFieldException();
-		}
+		for (SplitDataDTO split : splitsList) {
+			ExpenseSplit expenseSplit = new ExpenseSplit();
+			expenseSplit.setExpense(expense_);
+			User user_ = userService.getUserByUsername(split.getUserName());
+			expenseSplit.setUser(user_);
+			expenseSplit.setUsername(user_.getUsername());
+			//add security check for if user is a friend or not
+			float percent_ = split.getValue();
+			//add security check for percent value. cannot be greater than 100
+			expenseSplit.setSplitValue(percent_);
+			float amount_ = expense_.getAmount() * percent_ / 100;
+			expenseSplit.setAmount(amount_);
+			//add security check to confirm amount is not negative
+			try {
+				expenseSplitRepository.save(expenseSplit);
+				
+			}
+			catch (Exception e) {
+				throw new IllegalFieldException();
+			}
+		}	
 	}
 	
-	public ExpenseSplit saveExpenseSplitByExact(Expense expense_, User user_, float exactAmount_) {
-		ExpenseSplit expenseSplit = new ExpenseSplit();
-		expenseSplit.setUser(user_);
-		expenseSplit.setExpense(expense_);
-		expenseSplit.setSplitValue(exactAmount_);
-		float amount = exactAmount_;
-        expenseSplit.setAmount(amount);
-		try {
-			return expenseSplitRepository.save(expenseSplit);
-		}
-		catch (Exception e) {
-			throw new IllegalFieldException();
-		}
-	}
-	
-	public ExpenseSplit saveExpenseSplitByEqual(Expense expense_, User user_, float equalAmount_) {
-		ExpenseSplit expenseSplit = new ExpenseSplit();
-		expenseSplit.setUser(user_);
-		expenseSplit.setExpense(expense_);
-		expenseSplit.setSplitValue(equalAmount_);
-		float amount = equalAmount_;
-        expenseSplit.setAmount(amount);
-		try {
-			return expenseSplitRepository.save(expenseSplit);
-		}
-		catch (Exception e) {
-			throw new IllegalFieldException();
-		}
-	}
+//	public ExpenseSplit saveExpenseSplitByExact(Expense expense_, User user_, float exactAmount_) {
+//		ExpenseSplit expenseSplit = new ExpenseSplit();
+//		expenseSplit.setUser(user_);
+//		expenseSplit.setExpense(expense_);
+//		expenseSplit.setSplitValue(exactAmount_);
+//		float amount = exactAmount_;
+//        expenseSplit.setAmount(amount);
+//		try {
+//			return expenseSplitRepository.save(expenseSplit);
+//		}
+//		catch (Exception e) {
+//			throw new IllegalFieldException();
+//		}
+//	}
+//	
+//	public ExpenseSplit saveExpenseSplitByEqual(Expense expense_, User user_, float equalAmount_) {
+//		ExpenseSplit expenseSplit = new ExpenseSplit();
+//		expenseSplit.setUser(user_);
+//		expenseSplit.setExpense(expense_);
+//		expenseSplit.setSplitValue(equalAmount_);
+//		float amount = equalAmount_;
+//        expenseSplit.setAmount(amount);
+//		try {
+//			return expenseSplitRepository.save(expenseSplit);
+//		}
+//		catch (Exception e) {
+//			throw new IllegalFieldException();
+//		}
+//	}
 	
 }

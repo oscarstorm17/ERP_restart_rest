@@ -43,6 +43,7 @@ public class SecurityConfig {
 					.requestMatchers("/friend/**").permitAll()
 					.requestMatchers("/expense/**").permitAll()
 					.requestMatchers("/e/**").permitAll()
+					.requestMatchers("/expenseSplit/**").permitAll()
 					
 					.anyRequest().authenticated())
 			

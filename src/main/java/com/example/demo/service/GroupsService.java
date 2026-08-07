@@ -42,13 +42,15 @@ public class GroupsService {
 		}
 	}
 	
-	public Group createGroup(Group group_) {
+	public Group createGroup(Group group_) {// check this
 		//list of data checks
 		String admin = group_.getAdmin().trim();
 		String groupName = group_.getGroupName();
+//		System.out.println(//"xxxxx "+group_.getMembers().);
 		List<String> members = group_.getMembers();
 		for (int i = 0; i < members.size(); i++) {
 		    members.set(i, members.get(i));
+		    //System.out.println(members.get(i));
 		}
 		if(admin==null || admin.isBlank() ||
 				groupName==null || groupName.isBlank()||
@@ -59,6 +61,11 @@ public class GroupsService {
 		else {
 			members.add(group_.getAdmin());
 			group_.setMembers(members);
+			int i=0;
+			for(String member : group_.getMembers()) {
+				System.out.println("members = "+i+"  "+member);
+				i++;
+			}
 			groupRepository.save(group_);
 			return group_;	
 		}

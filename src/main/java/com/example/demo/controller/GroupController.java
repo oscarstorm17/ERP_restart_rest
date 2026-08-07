@@ -65,10 +65,7 @@ public class GroupController {
 		String myUser = jwtUtil.extractUsername(token);
 		System.out.println("Group Controller: create Group : details "+group_.getAdmin()+"  "+group_.getGroupName()+" ");
 		List<String> members = group_.getMembers();
-		for(String str : members) {
-			System.out.println("members = "+str);
-		}
-		members.add(group_.getAdmin());
+		
 		//System.out.println("usernmae inside token : "+username);
 		group_.setAdmin(myUser);
 		Group group = groupsService.createGroup(group_);
