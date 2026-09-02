@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Expense;
@@ -28,12 +31,18 @@ public class ExpenseCont {
 			
 			return ResponseEntity.ok("working");
 		}
-	//@CrossOrigin(origins = "http://localhost:5173/")
+	
 	@PostMapping("/addExpense") 
 	//expects 
 	public ResponseEntity<Expense> saveExpense(@RequestBody Expense expense_){
 		expenseService.addExpense(expense_);
 		return ResponseEntity.ok(expense_);
+	}
+	
+	@GetMapping("/getExpenses")
+	public ResponseEntity<List<Expense>> getExpensesByGroupID(@RequestParam Long group_id_){
+		List<Expense> expenseList = expenseService.findExpenseByGroupId(group_id_).get();
+		return ResponseEntity.ok(expenseList);
 	}
 	
 

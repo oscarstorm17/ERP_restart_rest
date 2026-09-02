@@ -64,23 +64,17 @@ public class ExpenseSplitController {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:5173/")
-	@PostMapping("/saveExpenseSplit/percent")
-	public ExpenseSplitDTO saveExpenseSplitByPercent(@RequestBody ExpenseSplitDTO request) { 
+	@PostMapping("/saveExpenseSplit/save")
+	public ExpenseSplitDTO saveExpenseSplitByAll(@RequestBody ExpenseSplitDTO request) { 
 		// will contain expenseID, 
-		//splitBy (percent), 
+		//splitBy (percent/exact/equal),  
 		//splits (SplitDataDTO object)	- username
 		//								- percent value (30%)
-		System.out.println("EXPENSE Split Controller : percent : executed");
+		System.out.println("EXPENSE Split Controller : save : executed");
 		Expense expense = expenseService.findExpenseByExpenseId(request.getExpenseID()).get();
-		if(request.getSplitBy().equalsIgnoreCase("percent")) {
-			//OK
-		}
-		else {
-			//error
-		}
 		ArrayList<SplitDataDTO> splits =  request.getSplits();
-        expenseSplitService.saveExpenseSplitByPercent(expense, splits);
-        System.out.println("EXPENSE Split Controller : percent : completed");
+        expenseSplitService.saveExpenseSplitByAll(expense, splits);
+        System.out.println("EXPENSE Split Controller : save : completed");
         return request;
 	}
 	
@@ -95,47 +89,6 @@ public class ExpenseSplitController {
 	
 	
 	
-	
-	
-	
-	
-//	@CrossOrigin(origins = "http://localhost:5173/")
-//	@PostMapping("/saveExpenseSplit/percent")
-//	public ExpenseSplit saveExpenseSplitByPercent(
-//			@RequestParam Long ExpenseId_,
-//			@RequestParam Long UserID_,
-//			@RequestParam Long percent_) { 
-//		// will contain expenseid, userid, splitValue
-//		//amount to be calculated in service layer	
-//		Expense expense = expenseService.findExpenseByExpenseId(ExpenseId_).get();
-//        User user = userService.getUserById(UserID_);
-//
-//        return expenseSplitService.saveExpenseSplitByPercent(expense, user, percent_);        
-//	}
-//	
-//	@CrossOrigin(origins = "http://localhost:5173/")
-//	@PostMapping("/saveExpenseSplit/exact")
-//	public ExpenseSplit saveExpenseSplitByExact(
-//			@RequestParam Long ExpenseId_,
-//			@RequestParam Long UserID_,
-//			@RequestParam Long exact_) {
-//			
-//			Expense expense = expenseService.findExpenseByExpenseId(ExpenseId_).get();
-//	        User user = userService.getUserById(UserID_);
-//	        return expenseSplitService.saveExpenseSplitByPercent(expense, user, exact_);        
-//	}
-//	
-//	@CrossOrigin(origins = "http://localhost:5173/")
-//	@PostMapping("/saveExpenseSplit/equal")
-//	public ExpenseSplit saveExpenseSplitByEqual(
-//			@RequestParam Long ExpenseId_,
-//			@RequestParam Long UserID_,
-//			@RequestParam Long equal_) {
-//			
-//			Expense expense = expenseService.findExpenseByExpenseId(ExpenseId_).get();
-//	        User user = userService.getUserById(UserID_);
-//	        return expenseSplitService.saveExpenseSplitByPercent(expense, user, equal_);        
-//	}
 	
 
 
