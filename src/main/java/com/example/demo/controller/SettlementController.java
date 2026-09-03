@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.SettlementDTO;
@@ -22,13 +23,14 @@ public class SettlementController {
 		this.settlementService = settlementService;
 	}
 	
-	@GetMapping("/settlement/{groupID}")
+	
+	
+	@GetMapping("/getSettlement")
 	public ResponseEntity<List<SettlementDTO>> getSettlement(
-	        @PathVariable Long groupID) {
+	        @RequestParam Long groupID) {
+		//System.out.println("Settlement Controller : reached");
 	    return ResponseEntity.ok(
 	            settlementService.calculateSettlement(groupID)
 	    );
 	}
-	
-
 }

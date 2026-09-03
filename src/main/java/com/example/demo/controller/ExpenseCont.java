@@ -27,7 +27,7 @@ public class ExpenseCont {
 	
 	@GetMapping("/check")
 		public ResponseEntity<String> check() {
-			System.out.println("checking new controller for expense success");
+			//System.out.println("checking new controller for expense success");
 			
 			return ResponseEntity.ok("working");
 		}
