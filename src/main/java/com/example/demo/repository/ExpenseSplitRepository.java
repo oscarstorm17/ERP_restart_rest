@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.ExpenseSplit;
 
+
 @Repository
 public interface ExpenseSplitRepository extends  JpaRepository<ExpenseSplit, Long>{
 	List<ExpenseSplit>  findByExpense_expenseID(Long expenseID);

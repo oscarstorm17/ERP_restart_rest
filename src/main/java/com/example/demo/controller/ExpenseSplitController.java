@@ -71,7 +71,7 @@ public class ExpenseSplitController {
 		//splits (SplitDataDTO object)	- username
 		//								- percent value (30%)
 		System.out.println("EXPENSE Split Controller : save : executed");
-		Expense expense = expenseService.findExpenseByExpenseId(request.getExpenseID()).get();
+		Expense expense = expenseService.findExpenseByExpenseId(request.getExpenseID());
 		ArrayList<SplitDataDTO> splits =  request.getSplits();
         expenseSplitService.saveExpenseSplitByAll(expense, splits);
         System.out.println("EXPENSE Split Controller : save : completed");

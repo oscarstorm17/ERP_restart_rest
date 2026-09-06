@@ -15,7 +15,7 @@ import com.example.demo.service.SettlementService;
 
 @RestController
 @RequestMapping("/settlement")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class SettlementController {
 
 	private SettlementService settlementService;
@@ -26,6 +26,7 @@ public class SettlementController {
 	
 	
 	@GetMapping("/getSettlement")
+	@CrossOrigin(origins = "http://localhost:5173/")
 	public ResponseEntity<List<SettlementDTO>> getSettlement(
 	        @RequestParam Long groupID) {
 		//System.out.println("Settlement Controller : reached");

@@ -21,7 +21,6 @@ public class ExpenseCont {
 	private ExpenseService expenseService;
 	
 	public ExpenseCont(ExpenseService expenseService) {
-		// TODO Auto-generated constructor stub
 		this.expenseService=expenseService;
 	}
 	

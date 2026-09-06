@@ -50,38 +50,32 @@ public class FriendController {
 	//Entry is made in Friends table
 	@CrossOrigin(origins = "http://localhost:5173/")
 	@PostMapping("/addFriend")
-	public ResponseEntity<Friends> addFriend(@RequestBody Friends friend_){ // resolve this
-		System.out.println("Friend Controller: Add Friend Reached");
+	public ResponseEntity<?> addFriend(@RequestBody Friends friend_){ // resolve this
+		//System.out.println("Friend Controller: Add Friend Reached");
 		String token = jwtUtil.getToken();
 		String myName = jwtUtil.extractUsername(token);
 		friend_.setUser1(myName);
 		String part1 = friend_.getUser1();
 		String part2 = friend_.getUser2();
-//		System.out.println("part1 = "+part1+" part 2 : "+part2);
 		if(part2.equals(myName)){	
-			System.out.println("FriendName = MyName = Error");
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+			//System.out.println("FriendName = MyName = Error");
+			return ResponseEntity.badRequest().body("You cannot search for yourself");
 		}
 		List<Friends> list = friendService.getFriendsByUserName(myName);
 		ArrayList<String> listOfFriends = new ArrayList<>(); 
 		for(Friends item: list) {
 			listOfFriends.add(item.getUser2());
 		}
-//		for(String str: listOfFriends) {
-//			System.out.println(""+str);
-//		}
 		
 		if(listOfFriends.contains(part2)) {
-			System.out.println("Friend Controller: friend already exists");
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE ).build();
+			//System.out.println("Friend Controller: friend already exists");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Friend already exists");
 		}
 		
 		Friends friendObj = new Friends(part1, part2);
 		Friends friendObj2 = new Friends(part2, part1);
 		friendService.addFriendToUser(friendObj);
 		friendService.addFriendToUser(friendObj2);
-//		System.out.println("user1: = "+friendObj.getUser1());
-//		System.out.println("user2: = "+friendObj.getUser2());
 		return ResponseEntity.ok(friendObj);
 	}
 	
@@ -115,6 +109,7 @@ public class FriendController {
 		}
 		return ResponseEntity.ok(suggestedUsers);
 	}
+	
 	@CrossOrigin(origins = "http://localhost:5173/")
 	@DeleteMapping("/deleteFriend")
 	public ResponseEntity<Friends> deleteFriend(@RequestParam("friendName_") String friendName_){

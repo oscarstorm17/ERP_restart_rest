@@ -16,18 +16,14 @@ import com.example.demo.repository.ExpenseSplitRepository;
 
 @Service
 public class ExpenseSplitService {
-	private ExpenseService expenseService;
 	private ExpenseSplitRepository expenseSplitRepository;
 	private UserService userService;
 	private GroupsService groupsService;
 	
 	public ExpenseSplitService(
-			ExpenseService expenseService,
 			ExpenseSplitRepository expenseSplitRepository,
 			UserService userService,
 			GroupsService groupsService) {
-		// TODO Auto-generated constructor stub
-		this.expenseService=expenseService;
 		this.expenseSplitRepository=expenseSplitRepository;
 		this.groupsService=groupsService;
 		this.userService=userService;
@@ -42,7 +38,7 @@ public class ExpenseSplitService {
 	}
 	
 	public List<ExpenseSplit> findExpenseSplitByExpenseId(Long id_){ // returns a list of expenseSplit
-		List<ExpenseSplit> list = expenseSplitRepository.findByExpense_expenseID(id_);
+		List<ExpenseSplit> list = expenseSplitRepository.findByExpenseID(id_);
 		if(list.isEmpty()) {
 			throw new ExpenseSplitNotFoundException();
 		}
@@ -112,5 +108,12 @@ public class ExpenseSplitService {
 		}
 	}
 
-	
+
+//	public void deleteExpenseSplitsByExpenseID(Long id_) {
+////		expenseService.findExpenseByExpenseId(id_);//throws error if expense is not found
+//		List<ExpenseSplit> list_ = expenseSplitRepository.findByExpense_ID(id_);
+//		for(ExpenseSplit item : list_) {
+//			expenseSplitRepository.delete(item);
+//		}
+//	}
 }
