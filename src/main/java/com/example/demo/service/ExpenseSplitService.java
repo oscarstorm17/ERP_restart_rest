@@ -38,7 +38,7 @@ public class ExpenseSplitService {
 	}
 	
 	public List<ExpenseSplit> findExpenseSplitByExpenseId(Long id_){ // returns a list of expenseSplit
-		List<ExpenseSplit> list = expenseSplitRepository.findByExpenseID(id_);
+		List<ExpenseSplit> list = expenseSplitRepository.findByExpense_expenseID(id_);
 		if(list.isEmpty()) {
 			throw new ExpenseSplitNotFoundException();
 		}

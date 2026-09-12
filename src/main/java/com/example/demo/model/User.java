@@ -1,23 +1,31 @@
 package com.example.demo.model;
 
+import org.springframework.stereotype.Indexed;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+import jakarta.persistence.Index;
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+	indexes = {
+			@Index (name = "idx_username", columnList = "username"),
+			@Index (name = "idx_email", columnList = "email")
+			}
+		)
+
 public class User {
 
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Column(unique = true, nullable = false)
     private String username;
     @Column(unique = true, nullable = false)

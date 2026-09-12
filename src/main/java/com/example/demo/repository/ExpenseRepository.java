@@ -13,5 +13,4 @@ import java.util.Optional;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 	Optional<Expense>  findByExpenseID(Long expenseID);
 	List<Expense> findByGroup(Group group);
-//	List<Expense> findByExpenseID(Long expenseID);
 }
