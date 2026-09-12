@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -21,7 +22,11 @@ import java.util.Set;
 import com.example.demo.model.EnumSplitBy;
 
 @Entity
-@Table(name = "expenses")
+@Table(name = "expenses",
+	indexes = {
+			@Index (name="idx_group", columnList = "groupID")
+	}
+	)
 public class Expense {
 
 	public Expense() {

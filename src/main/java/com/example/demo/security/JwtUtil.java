@@ -7,6 +7,7 @@ import javax.crypto.SecretKey;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -34,13 +35,16 @@ public class JwtUtil {
 	
 	
 	public String extractUsername(String token) {
-		username = Jwts.parserBuilder()
-				.setSigningKey(secretKey)
-				.build()
-				.parseClaimsJws(token)
-				.getBody()
-				.getSubject();
-		return username;
+	    try {
+	        return Jwts.parserBuilder()
+	                .setSigningKey(secretKey)
+	                .build()
+	                .parseClaimsJws(token)
+	                .getBody()
+	                .getSubject();
+	    } catch (ExpiredJwtException e) {
+	        return null; // or throw your own exception
+	    }
 	}
 	
 	

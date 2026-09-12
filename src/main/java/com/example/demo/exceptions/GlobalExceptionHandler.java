@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<String> handleUserNotFoud(UserNotFoundException e){
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@ExceptionHandler(IllegalFieldException.class)
@@ -24,21 +24,21 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(GroupNotFoundException.class)
 	public ResponseEntity<String> handleGroupNotFoundException(GroupNotFoundException e){
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	@ExceptionHandler(FriendsNotFoundException.class)
 	public ResponseEntity<String> handleFriendsNotFoundException(FriendsNotFoundException e){
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Friends Not Found");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@ExceptionHandler(ExpenseNotFoundException.class )
 		public ResponseEntity<String> handleExpenseNotFoundException(ExpenseNotFoundException e) {
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Expense Not Found");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@ExceptionHandler(ExpenseSplitNotFoundException.class)
 	public ResponseEntity<String> handleExpenseSplitNotFoundException(ExpenseSplitNotFoundException e){
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 }
