@@ -55,6 +55,7 @@ public class UserService {
 		}
 		user_.setUsername(user_.getUsername().trim());
 		user_.setEmail(user_.getEmail().trim());
+		user_.setPassword(passwordEncoder.encode(user_.getPassword()));
 		return userRepository.save(user_);  //always returns an object. save cannot return null
 		
 	}

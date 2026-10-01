@@ -17,5 +17,6 @@ public interface UserRepository extends  JpaRepository<User, Long>{
     
     
     
+    
     List<User> findByUsernameContainingIgnoreCase(String username); // used in Friend Service
 }

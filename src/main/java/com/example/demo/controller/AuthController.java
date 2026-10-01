@@ -92,9 +92,9 @@ public class AuthController {
 	@CrossOrigin(origins = "http://localhost:5173/")
 	@PostMapping("/signup")
 	public ResponseEntity<User> signup(@RequestBody User user_){
-		user_.setPassword(passwordEncoder.encode(user_.getPassword()));
-		User newUser = userService.createUser(user_);
-		return ResponseEntity.ok(newUser);
+		//user_.setPassword(passwordEncoder.encode(user_.getPassword()));
+		//User newUser = userService.createUser(user_);
+		return ResponseEntity.ok(user_);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:5173/")
@@ -103,7 +103,4 @@ public class AuthController {
 		User user = userService.getUserByUsername(username_);
 		return ResponseEntity.ok(user);
 	}
-	
-	
-
 }
