@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.demo.exceptions.IllegalFieldException;
@@ -32,6 +34,38 @@ public class UserService {
 				.orElseThrow(()-> new UserNotFoundException(username_)
 				);
 	}
+	
+	public ResponseEntity<?> checkUsername(String username_) {
+		String username = username_.trim();
+		String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*_)[a-zA-Z0-9_]{4,20}$";
+		if (!username.matches(regex)) {
+			System.out.println("Illegal Username");
+            return ResponseEntity.badRequest().body(
+                    Map.of("message",
+                            "Username must be 3–20 characters and contain only letters, numbers, or underscores")
+            );
+        }
+		else {
+			boolean exists = userRepository.findByUsername(username).isPresent();
+			if(exists) {
+				System.out.println("Username un-available "+username);
+				return ResponseEntity.ok(
+		                Map.of("available", false));
+			}
+			
+			else {
+				System.out.println("Username available "+username);
+				return ResponseEntity.ok(
+		                Map.of("available", true)
+		        );
+			}
+		}
+		
+		
+		
+	}
+	
+	
 	
 	//above is written short form of the code.
 	//same can be written in below format

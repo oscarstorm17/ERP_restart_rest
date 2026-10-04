@@ -22,6 +22,7 @@ import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 import com.example.demo.model.LoginDTO;
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserService;
 
@@ -102,5 +103,11 @@ public class AuthController {
 	public ResponseEntity<User> getUserByUsername(@RequestParam String username_){
 		User user = userService.getUserByUsername(username_);
 		return ResponseEntity.ok(user);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:5173/")
+	@GetMapping("/checkUsername")
+	public ResponseEntity<?> checkUsername(@RequestParam String username_){
+		return userService.checkUsername(username_);
 	}
 }

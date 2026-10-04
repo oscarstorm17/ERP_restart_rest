@@ -90,6 +90,7 @@ public class SignupService {
 
 	    verification.setVerified(true);
 	    emailVerificationRepository.save(verification);
+	    
 
 //	    User user = new User();
 //	    user.setEmail(email);

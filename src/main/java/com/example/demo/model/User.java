@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.processing.Pattern;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = false)	
     private String username;
     @Column(unique = true, nullable = false)
     private String email;
@@ -49,7 +51,4 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    
-    
-    
 }
