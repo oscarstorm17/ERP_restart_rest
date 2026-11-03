@@ -41,9 +41,10 @@ public class SecurityConfig {
 					.requestMatchers("/controller/**").permitAll()
 					.requestMatchers("/group/**").permitAll()
 					.requestMatchers("/friend/**").permitAll()
-					.requestMatchers("/expense/**").permitAll()
 					.requestMatchers("/e/**").permitAll()
+					.requestMatchers("/expense/**").permitAll()
 					.requestMatchers("/expenseSplit/**").permitAll()
+					.requestMatchers("/api/auth/**").permitAll()
 					.requestMatchers("/settlement/**").permitAll()
 					.anyRequest().authenticated())
 			

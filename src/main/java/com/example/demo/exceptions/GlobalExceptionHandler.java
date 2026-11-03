@@ -32,8 +32,8 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(ExpenseNotFoundException.class )
-		public ResponseEntity<String> handleExpenseNotFoundException(ExpenseNotFoundException e) {
-		return ResponseEntity.status(HttpStatus.OK).build();
+		public ResponseEntity<?> handleExpenseNotFoundException(ExpenseNotFoundException e) {
+		return ResponseEntity.status(HttpStatus.OK).body("Expense Not Found");
 	}
 	
 	@ExceptionHandler(ExpenseSplitNotFoundException.class)

@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.processing.Pattern;
 import org.springframework.stereotype.Indexed;
 
 import jakarta.persistence.Column;
@@ -26,7 +27,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = false)	
     private String username;
     @Column(unique = true, nullable = false)
     private String email;
@@ -57,7 +58,4 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    
-    
-    
 }

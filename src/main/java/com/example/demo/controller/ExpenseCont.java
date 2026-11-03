@@ -15,8 +15,8 @@ import com.example.demo.model.Expense;
 import com.example.demo.service.ExpenseService;
 
 @RestController
-@RequestMapping("/e")
 @CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/e")
 public class ExpenseCont {
 	private ExpenseService expenseService;
 	
@@ -30,7 +30,7 @@ public class ExpenseCont {
 			
 			return ResponseEntity.ok("working");
 		}
-	
+
 	@PostMapping("/addExpense") 
 	//expects 
 	public ResponseEntity<Expense> saveExpense(@RequestBody Expense expense_){
@@ -39,9 +39,9 @@ public class ExpenseCont {
 	}
 	
 	@GetMapping("/getExpenses")
-	public ResponseEntity<List<Expense>> getExpensesByGroupID(@RequestParam Long group_id_){
-		List<Expense> expenseList = expenseService.findExpenseByGroupId(group_id_).get();
-		return ResponseEntity.ok(expenseList);
+	public List<Expense> getExpensesByGroupId(@RequestParam Long group_id_){
+		return expenseService.findExpenseByGroupId(group_id_).get();
+
 	}
 	
 
