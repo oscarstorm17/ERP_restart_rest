@@ -16,18 +16,14 @@ import com.example.demo.repository.ExpenseSplitRepository;
 
 @Service
 public class ExpenseSplitService {
-	private ExpenseService expenseService;
 	private ExpenseSplitRepository expenseSplitRepository;
 	private UserService userService;
 	private GroupsService groupsService;
 	
 	public ExpenseSplitService(
-			ExpenseService expenseService,
 			ExpenseSplitRepository expenseSplitRepository,
 			UserService userService,
 			GroupsService groupsService) {
-		// TODO Auto-generated constructor stub
-		this.expenseService=expenseService;
 		this.expenseSplitRepository=expenseSplitRepository;
 		this.groupsService=groupsService;
 		this.userService=userService;
@@ -56,59 +52,68 @@ public class ExpenseSplitService {
 		}
 		return list;
 	}
-	public void saveExpenseSplitByPercent(Expense expense_, ArrayList<SplitDataDTO> splitsList){
-		
+	
+	public void saveExpenseSplitByAll(Expense expense_, ArrayList<SplitDataDTO> splitsList) {
 		for (SplitDataDTO split : splitsList) {
 			ExpenseSplit expenseSplit = new ExpenseSplit();
 			expenseSplit.setExpense(expense_);
 			User user_ = userService.getUserByUsername(split.getUserName());
 			expenseSplit.setUser(user_);
 			expenseSplit.setUsername(user_.getUsername());
-			//add security check for if user is a friend or not
-			float percent_ = split.getValue();
-			//add security check for percent value. cannot be greater than 100
-			expenseSplit.setSplitValue(percent_);
-			float amount_ = expense_.getAmount() * percent_ / 100;
-			expenseSplit.setAmount(amount_);
-			//add security check to confirm amount is not negative
-			try {
-				expenseSplitRepository.save(expenseSplit);
-				
+			if(expense_.getSplitBy().toString().equalsIgnoreCase("percent")) {
+				float percent_ = split.getValue();
+				//add security check for percent value. cannot be greater than 100
+				expenseSplit.setSplitValue(percent_);
+				float amount_ = expense_.getAmount() * percent_ / 100;
+				expenseSplit.setAmount(amount_);
+				try {
+					expenseSplitRepository.save(expenseSplit);
+					System.out.println("Expense Split Service : percent : Executed");
+					
+				}
+				catch (Exception e) {
+					throw new IllegalFieldException();
+				}
 			}
-			catch (Exception e) {
-				throw new IllegalFieldException();
+			else if(expense_.getSplitBy().toString() .equalsIgnoreCase("exact")) {
+				//add security check for if user is a friend or not
+				float exact_ = split.getValue();
+				//add security check for percent value. cannot be greater than 100
+				expenseSplit.setSplitValue(exact_);
+				float amount_ = exact_;
+				expenseSplit.setAmount(amount_);
+				try {
+					expenseSplitRepository.save(expenseSplit);
+					System.out.println("Expense Split Service : exact : Executed");
+				}
+				catch (Exception e) {
+					throw new IllegalFieldException();
+				}
 			}
-		}	
+			else if(expense_.getSplitBy().toString() .equalsIgnoreCase("equal")) {
+				//add security check for if user is a friend or not
+				float equal_ = split.getValue();
+				//add security check for percent value. cannot be greater than 100
+				expenseSplit.setSplitValue(equal_);
+				float amount_ = equal_;
+				expenseSplit.setAmount(amount_);
+				try {
+					expenseSplitRepository.save(expenseSplit);
+					System.out.println("Expense Split Service : exact : Executed");
+				}
+				catch (Exception e) {
+					throw new IllegalFieldException();
+				}
+			}
+		}
 	}
-	
-//	public ExpenseSplit saveExpenseSplitByExact(Expense expense_, User user_, float exactAmount_) {
-//		ExpenseSplit expenseSplit = new ExpenseSplit();
-//		expenseSplit.setUser(user_);
-//		expenseSplit.setExpense(expense_);
-//		expenseSplit.setSplitValue(exactAmount_);
-//		float amount = exactAmount_;
-//        expenseSplit.setAmount(amount);
-//		try {
-//			return expenseSplitRepository.save(expenseSplit);
-//		}
-//		catch (Exception e) {
-//			throw new IllegalFieldException();
+
+
+//	public void deleteExpenseSplitsByExpenseID(Long id_) {
+////		expenseService.findExpenseByExpenseId(id_);//throws error if expense is not found
+//		List<ExpenseSplit> list_ = expenseSplitRepository.findByExpense_ID(id_);
+//		for(ExpenseSplit item : list_) {
+//			expenseSplitRepository.delete(item);
 //		}
 //	}
-//	
-//	public ExpenseSplit saveExpenseSplitByEqual(Expense expense_, User user_, float equalAmount_) {
-//		ExpenseSplit expenseSplit = new ExpenseSplit();
-//		expenseSplit.setUser(user_);
-//		expenseSplit.setExpense(expense_);
-//		expenseSplit.setSplitValue(equalAmount_);
-//		float amount = equalAmount_;
-//        expenseSplit.setAmount(amount);
-//		try {
-//			return expenseSplitRepository.save(expenseSplit);
-//		}
-//		catch (Exception e) {
-//			throw new IllegalFieldException();
-//		}
-//	}
-	
 }

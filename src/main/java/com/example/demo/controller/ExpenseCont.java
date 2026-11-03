@@ -21,17 +21,16 @@ public class ExpenseCont {
 	private ExpenseService expenseService;
 	
 	public ExpenseCont(ExpenseService expenseService) {
-		// TODO Auto-generated constructor stub
 		this.expenseService=expenseService;
 	}
 	
 	@GetMapping("/check")
 		public ResponseEntity<String> check() {
-			System.out.println("checking new controller for expense success");
+			//System.out.println("checking new controller for expense success");
 			
 			return ResponseEntity.ok("working");
 		}
-	//@CrossOrigin(origins = "http://localhost:5173/")
+
 	@PostMapping("/addExpense") 
 	//expects 
 	public ResponseEntity<Expense> saveExpense(@RequestBody Expense expense_){
@@ -42,6 +41,7 @@ public class ExpenseCont {
 	@GetMapping("/getExpenses")
 	public List<Expense> getExpensesByGroupId(@RequestParam Long group_id_){
 		return expenseService.findExpenseByGroupId(group_id_).get();
+
 	}
 	
 

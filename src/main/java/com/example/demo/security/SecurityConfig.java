@@ -45,6 +45,7 @@ public class SecurityConfig {
 					.requestMatchers("/expense/**").permitAll()
 					.requestMatchers("/expenseSplit/**").permitAll()
 					.requestMatchers("/api/auth/**").permitAll()
+					.requestMatchers("/settlement/**").permitAll()
 					.anyRequest().authenticated())
 			
 			.sessionManagement(

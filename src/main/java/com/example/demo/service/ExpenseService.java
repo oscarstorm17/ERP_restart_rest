@@ -23,8 +23,8 @@ public class ExpenseService {
 	public ExpenseService(ExpenseRepository expenseRepository, 
 			GroupRepository groupRepository,
 			GroupsService groupsService,
-			UserService userService) {
-		// TODO Auto-generated constructor stub
+			UserService userService,
+			ExpenseSplitService expenseSplitService) {
 		this.expenseRepository = expenseRepository;
 		this.groupRepository=groupRepository;
 		this.groupsService=groupsService;
@@ -46,21 +46,28 @@ public class ExpenseService {
 		return  expense_; 
 	}
 	
-	public Optional<Expense> findExpenseByExpenseId(Long id_){
-		return expenseRepository.findByExpenseID(id_);
+	public Expense findExpenseByExpenseId(Long id_){
+//		Expense expense = expenseRepository.findByExpenseID(id_).;
+//		return expenseRepository.findByExpenseID(id_)
+//				.orElseThrow(() -> new ExpenseNotFoundException());
+		return null;
 	}
 	
 	public Optional<List<Expense>> findExpenseByGroupId(Long id_){
-		//implement this
 		Group group_ = groupsService.getGroupById(id_);
-		System.out.println("EXPENSE SERVICE : find Expense By Group Id : Group found by id = "+id_);
 		List<Expense> list_ = expenseRepository.findByGroup(group_);
 		if(list_.isEmpty()) {
 			throw new ExpenseNotFoundException();
 		}
-		
 		return Optional.ofNullable(list_);
 	}
+	
+//	public void deleteExpenseByExpenseID(Long id_) {
+//		Expense expense = findExpenseByExpenseId(id_); // throws exception if expense not found
+//		expenseSplitService.deleteExpenseSplitsByExpenseID(id_);
+//		expenseRepository.delete(expense);
+//		
+//	}
 	
 
 	
