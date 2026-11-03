@@ -22,8 +22,10 @@ import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 import com.example.demo.model.LoginDTO;
 import com.example.demo.model.User;
+import com.example.demo.model.VerifyOtpRequest;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtUtil;
+import com.example.demo.service.OtpService;
 import com.example.demo.service.UserService;
 
 import jakarta.servlet.ServletContext;
@@ -37,15 +39,18 @@ public class AuthController {
 	private final UserService userService;
 	private final JwtUtil jwtUtil;
 	private final PasswordEncoder passwordEncoder;
+	private final OtpService otpService;
 	
 	public AuthController(
 			UserService userService,
 			JwtUtil jwtUtil,
-			PasswordEncoder passwordEncoder
+			PasswordEncoder passwordEncoder,
+			OtpService otpService
 			) {
 		this.passwordEncoder = passwordEncoder;
 		this.jwtUtil = jwtUtil;
 		this.userService = userService;
+		this.otpService = otpService;
 	}
 	
 	@GetMapping("/")
@@ -92,10 +97,18 @@ public class AuthController {
 	
 	@CrossOrigin(origins = "http://localhost:5173/")
 	@PostMapping("/signup")
-	public ResponseEntity<User> signup(@RequestBody User user_){
+	public ResponseEntity<?> signup(@RequestBody User user_){
 		//user_.setPassword(passwordEncoder.encode(user_.getPassword()));
-		//User newUser = userService.createUser(user_);
-		return ResponseEntity.ok(user_);
+		return userService.createUser(user_);
+		//all exceptions handled in service layer
+	}
+	
+	@CrossOrigin(origins = "http://localhost:5173/")
+	@PostMapping("/verifyOTP")
+	public ResponseEntity<?> verifyOTP(@RequestBody VerifyOtpRequest request_){
+		//return userService.createUser(user_);
+		return otpService.verifyOtp(request_);
+		//all exceptins are handled in service layer
 	}
 	
 	@CrossOrigin(origins = "http://localhost:5173/")

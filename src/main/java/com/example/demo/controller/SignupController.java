@@ -26,22 +26,22 @@ public class SignupController {
     }
     String encodedPendingSignupPassword;
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Validated @RequestBody SignupRequest request) {
-        signupService.startSignup(request);
-        encodedPendingSignupPassword = passwordEncoder.encode(request.password());
-        return ResponseEntity.ok(
-                java.util.Map.of("message", "OTP sent to your email")
-        );
-    }
+//    @PostMapping("/signup")
+//    public ResponseEntity<?> signup(@Validated @RequestBody SignupRequest request) {
+//        signupService.startSignup(request);
+//        encodedPendingSignupPassword = passwordEncoder.encode(request.password());
+//        return ResponseEntity.ok(
+//                java.util.Map.of("message", "OTP sent to your email")
+//        );
+//    }
 
-    @PostMapping("/verifyEmail")
-    public ResponseEntity<?> verifyEmail(@Validated @RequestBody VerifyOtpRequest request) {
-        signupService.verifyOtp(request, encodedPendingSignupPassword);
-
-        return ResponseEntity.ok(
-                java.util.Map.of("message", "Email verified and account created \n Redirecting to login")
-        );
-    }
+//    @PostMapping("/verifyEmail")
+//    public ResponseEntity<?> verifyEmail(@Validated @RequestBody VerifyOtpRequest request) {
+//        signupService.verifyOtp(request, encodedPendingSignupPassword);
+//
+//        return ResponseEntity.ok(
+//                java.util.Map.of("message", "Email verified and account created \n Redirecting to login")
+//        );
+//    }
 }
 
